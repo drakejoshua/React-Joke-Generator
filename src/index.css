@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.display-ui {
+    @apply w-full h-full items-center justify-center gap-x-3
+}
+.display-ui__display-icon {
+    @apply text-5xl;
+}
+.display-ui__display-text {
+    @apply text-xl capitalize font-medium;
+}
