@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 
 
-function Quote_Ctn() {
+function Joke_Ctn( props ) {
     var languages = [
         {
           language: "english",
@@ -17,8 +17,8 @@ function Quote_Ctn() {
           langCode: "es"
         },
         {
-          language: "dutch",
-          langCode: "nl"
+          language: "german",
+          langCode: "de"
         }
     ];
 
@@ -26,30 +26,35 @@ function Quote_Ctn() {
         <div id="quote-ctn" className="w-full flex-grow">
 
             {/* loading pane - to display loading UI */}
-            <div id="loading-pane" className="display-ui flex">
-                <span className="material-symbols-outlined display-ui__display-icon animate-spin">
-                    autorenew
-                </span>
+            { 
+                ( props.loadState == "loading" ) && <div id="loading-pane" className="display-ui flex">
+                    <span className="material-symbols-outlined display-ui__display-icon animate-spin">
+                        autorenew
+                    </span>
 
-                <h2 className="display-ui__display-text">
-                    loading quote
-                </h2>
-            </div>
+                    <h2 className="display-ui__display-text">
+                        loading joke
+                    </h2>
+                </div> 
+            }
             
             {/* error pane - to display error UI */}
-            <div id="error-pane" className="display-ui hidden">
+            {
+                ( props.loadState == "error" ) && <div id="error-pane" className="display-ui flex">
                 <span className="material-symbols-outlined display-ui__display-icon animate-pulse">
                     sync_problem
                 </span>
 
                 <h2 className="display-ui__display-text">
-                    error loading quote
+                    error loading joke
                 </h2>
-            </div>
+                </div>
+            }
 
             {/* loaded pane - to display quote, author and all other 
-            data after loading from API*/}
-            <div id="loaded-pane" className="hidden">
+             data after loading from API*/}
+            {
+                ( props.loadState == "loaded" ) && <div id="loaded-pane">
 
                 {/* language selection ctn */}
                 <div id="language-select-ctn" className="flex gap-x-1">
@@ -58,13 +63,17 @@ function Quote_Ctn() {
                     </label>
 
                     {/* language select */}
-                    <select id="language-select" className="capitalize bg-white focus-within:outline-none focus:outline-none">
+                    <select id="language-select" className="capitalize bg-white focus-within:outline-none focus:outline-none"
+                        onChange={ ( event ) => { props.setLanguageHandler( event.target.value ) } }
+                        defaultValue={ languages.find( function( language) {
+                            return ( language.langCode == props.langCode )
+                        } ) }>
                         {
                             languages.map( ( language, index ) => {
                                 return (
                                 <option value={ language.langCode } key={ index }>
                                     {
-                                    language.language
+                                        language.language
                                     }
                                 </option>
                                 );
@@ -75,23 +84,20 @@ function Quote_Ctn() {
                 
                 {/* quote ctn - contains quote, author, etc */}
                 <div id="quote-ctn" className="flex gap-x-4 xl:items-center mt-16">
-                    <span className="material-symbols-outlined text-3xl xl:text-9xl h-fit w-fit inline-block" style={ { transform: "scale(-1)" } }>
-                        format_quote
+                    <span className="material-symbols-outlined text-3xl xl:text-9xl h-fit w-fit inline-block">
+                        sentiment_very_satisfied
                     </span>
 
                     <div className="flex-grow-1">
-                        <h1 id="quote" className="text-2xl italic font-medium mb-5">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Sit fugiat reprehenderit ad, facilis dolorum doloribus. 
-                        Tempora ea esse sapiente architecto?
+                        <h1 id="quote" className="text-2xl italic font-medium text-black">
+                            {
+                                props.joke
+                            }
                         </h1>
-
-                        <p id="author" className="capitalize text-lg font-normal">
-                        joshua mabawonku
-                        </p>
                     </div>
                 </div>
-            </div>
+                </div>
+            }
         </div>
     );
 }
@@ -99,13 +105,12 @@ function Quote_Ctn() {
 
 // create prop-types declarations for component props
 // to ensure type safety and proper code linting
-Quote_Ctn.propTypes = {
+Joke_Ctn.propTypes = {
     loadState: PropTypes.string.isRequired,
-    language: PropTypes.string,
-    quote: PropTypes.string,
-    author: PropTypes.string,
+    langCode: PropTypes.string,
+    joke: PropTypes.string,
     setLanguageHandler: PropTypes.func
 }
 
 
-export default Quote_Ctn;
+export default Joke_Ctn;
