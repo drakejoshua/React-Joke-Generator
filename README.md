@@ -1,6 +1,6 @@
-# React-Quote-Generator
+# React-Joke-Generator
 
-A sample web project that i'm using to practice how to use React by building a simple quote generator app
+A sample web project that i'm using to practice how to use React by building a simple joke generator app
 and sharpen react usage on tools like stateful functional components, react hooks, axios.js, tailwindCSS and react's recouncilation.
 
 This is a simple react webapp( built using vite, react, google material symbols, axios.js, react hooks, stateful functional components,
