@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 
 function Joke_Ctn( props ) {
+    // langauges list containing languages and language codes supported by the app
     var languages = [
         {
           language: "english",
@@ -68,6 +69,8 @@ function Joke_Ctn( props ) {
                         defaultValue={ languages.find( function( language) {
                             return ( language.langCode == props.langCode )
                         } ) }>
+                        
+                        {/* loop through each language and create corresponding option */}
                         {
                             languages.map( ( language, index ) => {
                                 return (
